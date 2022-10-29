@@ -14,11 +14,11 @@ var (
 type c{{$.Name}} struct{}
 
 {{range .Methods}}
-func (c *c{{$.Name}}) {{ .HandlerName }}(ctx context.Context, req *v1.{{ .HandlerName }}Req) (res *v1.{{ .HandlerName }}Res, err error) {
+func (c *c{{$.Name}}) {{ .FunctionName }}(ctx context.Context, req *v1.{{ .FunctionName }}Req) (res *v1.{{ .FunctionName }}Res, err error) {
 	{{if eq .Method "POST" "PUT" "DELETE"}}
 	// 调用 service 处理请求
-	err := service.{{$.Name}}().{{ .HandlerName }}(ctx, &model.{{ .HandlerName }}Input{
-		{{.Request}}:&api.{{.Request}}{
+	err := service.{{$.Name}}().{{ .FunctionName }}(ctx, &model.{{ .FunctionName }}Input{
+		{{ .Request.Name }}:&api.{{ .Request.Name }}{
 
 		},
 	})
@@ -37,7 +37,7 @@ func (c *c{{$.Name}}) {{ .HandlerName }}(ctx context.Context, req *v1.{{ .Handle
 	return
 	{{else if eq .Method "GET"}}
 	// 调用 service 处理请求
-	r, err := service.{{$.Name}}().{{ .HandlerName }}(ctx, &model.{{ .HandlerName }}Input{
+	r, err := service.{{$.Name}}().{{ .FunctionName }}(ctx, &model.{{ .FunctionName }}Input{
 
 	})
 

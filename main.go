@@ -8,10 +8,13 @@ import (
 	"google.golang.org/protobuf/types/pluginpb"
 )
 
-const version = "0.0.1"
+var (
+	version     = "0.0.1"
+	showVersion = flag.Bool("version", false, "print the version and exit")
+	omitempty   = flag.Bool("omitempty", true, "omit if google.api is empty")
+)
 
 func main() {
-	showVersion := flag.Bool("version", false, "print the version and exit")
 	flag.Parse()
 	if *showVersion {
 		fmt.Printf("protoc-gen-gf-controller %v\n", version)
@@ -30,7 +33,7 @@ func main() {
 			if !f.Generate {
 				continue
 			}
-			generateFile(gen, f)
+			generateFile(gen, f, *omitempty)
 		}
 		return nil
 	})
