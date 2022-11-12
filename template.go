@@ -102,3 +102,8 @@ func (m *methodDesc) FunctionName() string {
 		return m.Name
 	}
 }
+
+// LowerServiceName lower service name
+func (s *serviceDesc) LowerServiceName() string {
+	return strings.ToLower(s.Name)
+}
